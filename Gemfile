@@ -31,4 +31,5 @@ group :development, :test do
   gem 'shoulda'
   gem 'faker'
   gem 'factory_girl_rails'
+  gem 'nyan-cat-formatter'
 end
