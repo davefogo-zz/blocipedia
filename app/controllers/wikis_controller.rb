@@ -19,7 +19,7 @@ class WikisController < ApplicationController
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
 
-    if @wiki.private? && current_user.standard?
+    if not_authorized_for_private?
       flash[:alert] = "You need a premium account to do that."
     end
 
@@ -40,7 +40,7 @@ class WikisController < ApplicationController
   def update
     @wiki = Wiki.find(params[:id])
 
-    if @wiki.private? && current_user.standard?
+    if not_authorized_for_private?
       flash[:alert] = "You need a premium account to do that."
     end
 
@@ -69,6 +69,10 @@ class WikisController < ApplicationController
 
   def wiki_params
     params.require(:wiki).permit(:title, :body, :private, :user)
+  end
+
+  def not_authorized_for_private?
+    @wiki.private? && current_user.standard?
   end
 
   def authorize_user
