@@ -23,6 +23,7 @@ gem 'bootstrap-sass'
 gem 'bcrypt'
 gem 'figaro'
 gem 'pry'
+gem 'stripe'
 
 group :development, :test do
   gem 'byebug'

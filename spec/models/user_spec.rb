@@ -26,6 +26,10 @@ RSpec.describe User, type: :model do
       expect(user).to respond_to(:role)
     end
 
+    it "responds to paid" do
+      expect(user).to respond_to(:paid)
+    end
+
     it "responds to standard?" do
       expect(user).to respond_to(:standard?)
     end
@@ -37,6 +41,7 @@ RSpec.describe User, type: :model do
     it "responds to admin?" do
       expect(user).to respond_to(:admin?)
     end
+
 
     describe "roles" do
       it "is standard user by default" do
@@ -107,4 +112,16 @@ RSpec.describe User, type: :model do
       expect(user_with_invalid_email).to_not be_valid
     end
   end
+
+  describe "#downgrade" do
+    it "responds to .downgrade" do
+      expect(user).to respond_to(:downgrade)
+    end
+
+    it "downgrades a user from premium to standard" do
+      user.downgrade
+      expect(user.premium?).to be_falsey
+    end
+  end
+
 end

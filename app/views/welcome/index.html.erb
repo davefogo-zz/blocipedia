@@ -2,19 +2,21 @@
 <div class="jumbotron">
   <h1>Welcome to Blocipedia</h1>
   <p>Where knowledge becomes social.</p>
-  <p>
-    <%= link_to "Sign in", new_session_path %> or
-    <%= link_to "Sign up", new_user_path, class: 'btn btn-primary' %>
-  </p>
+  <% if current_user.nil? %>
+    <p>
+      <%= link_to "Sign in", new_session_path %> or
+      <%= link_to "Sign up", new_user_path, class: 'btn btn-primary' %>
+    </p>
+  <% end %>
 </div>
 
 <div class="row">
   <div class="col-md-6">
     <h2>Create public wikis!</h2>
-      <h3><%= link_to "Free Plan" %></h3>
+      <h3><%= link_to "Free Plan", new_user_path %></h3>
   </div>
   <div class="col-md-6">
     <h2>Create public and private wikis!</h2>
-    <h3><%= link_to "Premium Plan" %></h3>
+    <h3><%= link_to "Premium Plan", new_charge_path %></h3>
   </div>
 </div>

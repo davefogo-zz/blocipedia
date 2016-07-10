@@ -1,6 +1,8 @@
 require 'rails_helper'
+include SessionsHelper
 
 RSpec.describe UsersController, type: :controller do
+  let(:my_user) {create(:user)}
   let(:new_user_attributes) do
     {
       name: "Solid Snake",
@@ -72,7 +74,6 @@ RSpec.describe UsersController, type: :controller do
       post :create, user: new_user_attributes
       expect(session[:user_id]).to eq(assigns(:user).id)
     end
-
   end
 
 end
