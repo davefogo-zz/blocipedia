@@ -1,0 +1,13 @@
+<h1>Sign Up Confirmation</h1>
+
+<h3>Thank you for signing up! <%= current_user.name %></h3>
+<br>
+<h3>Would you like to upgrade your account to Premium? Pemium enables you to save and edit private wikis.</h3>
+<br>
+<br>
+<div class="col-md-2">
+  <%=link_to "Yes", {controller: "charges", action: "new", params: params}, class: 'btn btn-success'%>
+</div>
+<div class="col-md-2">
+  <%=link_to "No", root_path, class: 'btn btn-danger', data-confirm: 'You will be able to upgrade your account in your user profile.'%>
+</div>

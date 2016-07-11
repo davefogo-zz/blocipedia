@@ -4,13 +4,11 @@ Rails.application.routes.draw do
 
   resources :wikis
 
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :show]
 
   resources :sessions, only: [:new, :create, :destroy]
 
-  post 'users/confirm' => 'users#confirm'
-
-  post 'users/premium' => 'users#premium'
+  get 'users/upgrade' => 'users#upgrade'
 
   get 'about' => 'welcome#about'
 

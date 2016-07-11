@@ -1,0 +1,19 @@
+<h2>User Profile</h2>
+<br>
+<div class="row">
+  <div class="col-md-8">
+    <div class="media">
+      <h3>Name: <%= @user.name %></h3>
+      <h3>Email: <%= @user.email %></h3>
+      <br>
+      <small>
+        <%= pluralize(@user.wikis.count, 'wiki') %> created.
+      </small>
+    </div>
+    <br>
+    <br>
+  </div>
+  <div class="col-md-8">
+    <%= link_to "Upgrade to Premium", new_charge_path,  class: 'btn btn-success' %>
+  </div>
+</div>
