@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   get 'users/upgrade' => 'users#upgrade'
 
+  post 'users/:id/' => 'users#downgrade'
+
   get 'about' => 'welcome#about'
 
   root 'welcome#index'

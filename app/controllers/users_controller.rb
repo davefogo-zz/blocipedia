@@ -26,6 +26,17 @@ class UsersController < ApplicationController
 
   end
 
+  def downgrade
+    @user = User.find(params[:id])
+
+    if @user.downgrade
+      @user.standard!
+      flash[:notice] = "Your account was successfully downgraded."
+      redirect_to user_path(@user)
+    end
+
+  end
+
   private
 
   def user_params
