@@ -43,6 +43,7 @@ class WikisController < ApplicationController
 
   def update
     @wiki = Wiki.find(params[:id])
+    @wiki.assign_attributes(wiki_params)
 
     if authorized_for_private?
       flash[:alert] = "You need a premium account to do that."
