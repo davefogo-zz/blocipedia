@@ -1,13 +1,20 @@
 <h1>Edit Wiki</h1>
 <div class="row">
-  <div class="col-md-4">
-    <p>Guidelies for wikis</p>
-    <ul>
-      <li>The title must be at least 5 characters</li>
-      <li>The body must be at least 20 characters</li>
-    </ul>
-  </div>
-  <div class="col-md-8">
+  <div class="col-md-6">
+    <h3>Edit</h3>
     <%= render partial: 'form', locals: {wiki: @wiki} %>
   </div>
+  <div class="col-md-6">
+    <h3>Preview</h3>
+    <strong>Title:</strong>
+    <%= markdown(@wiki.title) %>
+    <br>
+    <br>
+    <strong>Body:</strong>
+    <%= markdown(@wiki.body) %>
+  </div>
+</div>
+<div class="pull-right">
+  <small>
+    Mardown formatting available. <a href="http://stackoverflow.com/editing-help">Markdown guide.</a>
 </div>

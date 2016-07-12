@@ -35,7 +35,7 @@ class WikisController < ApplicationController
   def edit
     @wiki = Wiki.find(params[:id])
 
-    if not_authorized_for_private?
+    if authorized_for_private?
       flash[:alert] = "You need a premium account to do that."
       redirect_to wikis_path
     end
@@ -44,7 +44,7 @@ class WikisController < ApplicationController
   def update
     @wiki = Wiki.find(params[:id])
 
-    if not_authorized_for_private?
+    if authorized_for_private?
       flash[:alert] = "You need a premium account to do that."
     end
 
@@ -75,7 +75,7 @@ class WikisController < ApplicationController
     params.require(:wiki).permit(:title, :body, :private, :user)
   end
 
-  def not_authorized_for_private?
+  def authorized_for_private?
     @wiki.private? && current_user.standard?
   end
 
