@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) {create(:user)}
+  let(:user) {create(:user, role: :premium)}
 
   it { is_expected.to have_many(:wikis)}
+  it { is_expected.to have_many(:collaborators)}
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_length_of(:name).is_at_least(1) }
@@ -24,10 +25,6 @@ RSpec.describe User, type: :model do
 
     it "responds to role" do
       expect(user).to respond_to(:role)
-    end
-
-    it "responds to paid" do
-      expect(user).to respond_to(:paid)
     end
 
     it "responds to standard?" do
@@ -121,6 +118,21 @@ RSpec.describe User, type: :model do
     it "downgrades a user from premium to standard" do
       user.downgrade
       expect(user.premium?).to be_falsey
+    end
+  end
+
+  describe "@collaborator_to(wiki)" do
+    before do
+      @wiki = Wiki.create!(title: Faker::Hipster.sentence, body: Faker::Hipster.paragraph, user: user, private: true)
+    end
+
+    it "returns nil if the user does not collaborate to the wiki" do
+      expect(user.collaborator_to(@wiki)).to be_nil
+    end
+
+    it "returns the appropriate wiki if it exists" do
+      collaborate = user.collaborators.where(wiki: @wiki).create
+      expect(user.collaborator_to(@wiki)).to eq(collaborate)
     end
   end
 

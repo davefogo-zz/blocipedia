@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :wikis
+  has_many :collaborators, dependent: :destroy
   before_save {self.email = email.downcase if email.present?}
   before_save {self.role ||= :standard}
 
@@ -16,4 +17,7 @@ class User < ActiveRecord::Base
     self.standard!
   end
 
+  def collaborator_to(wiki)
+    collaborators.where(wiki_id: wiki.id).first
+  end
 end

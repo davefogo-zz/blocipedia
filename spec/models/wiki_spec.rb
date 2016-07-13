@@ -5,6 +5,8 @@ RSpec.describe Wiki, type: :model do
   let(:my_user) {create(:user, role: :premium)}
   let(:user_wiki) {create(:wiki, user: my_user, private: true)}
 
+  it {is_expected.to have_many(:collaborators)}
+
   it {is_expected.to validate_presence_of(:title)}
   it {is_expected.to validate_presence_of(:body)}
   it {is_expected.to validate_presence_of(:user)}
@@ -18,12 +20,22 @@ RSpec.describe Wiki, type: :model do
     end
   end
 
-  describe ".make_public" do
-    @my_user = User.create!(name: "User name", email: "email@tfaiwotafeiwt.com", password: "password", role: "premium")
-    @user_wiki = @my_user.wikis.create(title: "this is a title to be used to test", body: "this is a body to be used to test if this class method works.", private: true)
+  describe "scopes" do
+    before do
+      @public_wiki = Wiki.create!(title: Faker::Hipster.sentence, body: Faker::Hipster.paragraph, user: my_user)
+      @private_wiki = Wiki.create!(title: Faker::Hipster.sentence, body: Faker::Hipster.paragraph, user: user_wiki, private: true)
+      create_session(user_wiki)
+    end
 
-    it "makes all wikis public for a user" do
-      expect(my_user.wikis.count).to eq(1)
+    describe "visible_to(user)" do
+      it "returns all wikis to premium and admin users" do
+
+        expect(Wiki.visible_to(wiki_user)).to eq(Wiki.all)
+      end
+
+      it "returns only public wikis to guest and standard users" do
+        expect(Wiki.visible_to(nil)).to eq([@public_wiki])
+      end
     end
   end
 end

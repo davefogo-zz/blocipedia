@@ -20,11 +20,10 @@
   <% if current_user.premium? || current_user.admin? %>
     <div class="form-group">
       <%= f.label :private, class: 'checkbox' do %>
-        <%= f.check_box :private %> Private topic
+        <%= f.check_box :private %> Private
       <% end %>
     </div>
   <% end %>
-  <br>
   <div class="form-group">
     <%=  f.submit "Save", class: 'btn btn-success pull-right' %>
   </div>

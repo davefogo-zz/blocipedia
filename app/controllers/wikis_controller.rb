@@ -4,11 +4,16 @@ class WikisController < ApplicationController
   before_action :authorize_admin_user, only: [:destroy]
 
   def index
-    @wikis = Wiki.all
+    @wikis = Wiki.visible_to(current_user)
   end
 
   def show
     @wiki = Wiki.find(params[:id])
+
+    unless @wiki.private == false || current_user.premium? && current_user == @wiki.user || current_user.collaborator_to(@wiki) || current_user.admin?
+      flash[:alert] = "You must be premium user to read private wikis."
+      redirect_to wikis_path
+    end
   end
 
   def new
@@ -19,7 +24,7 @@ class WikisController < ApplicationController
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
 
-    if not_authorized_for_private?
+    if authorized_for_private?
       flash[:alert] = "You need a premium account to do that."
     end
 
@@ -34,6 +39,7 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
+    @users = User.all
 
     if authorized_for_private?
       flash[:alert] = "You need a premium account to do that."
