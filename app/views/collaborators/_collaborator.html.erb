@@ -1,0 +1,9 @@
+<% if collaborator = @user.collaborator_to(wiki) %>
+  <%= link_to [wiki, collaborator], class: 'btn btn-danger', method: :delete do %>
+    Remove
+  <% end %>
+<% else %>
+  <%= link_to [wiki, Collaborator.new], class: 'btn btn-primary', method: :post do %>
+    Add
+  <% end %>
+<% end %>

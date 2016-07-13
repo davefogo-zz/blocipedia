@@ -4,11 +4,11 @@ Rails.application.routes.draw do
 
   post 'users/:id/' => 'users#downgrade'
 
-  resources :collaborators, only: [:create, :destroy]
-
   resources :charges, only: [:new, :create]
 
-  resources :wikis
+  resources :wikis do
+    resources :collaborators, only: [:create, :destroy]
+  end
 
   resources :users, only: [:show, :new, :create]
 

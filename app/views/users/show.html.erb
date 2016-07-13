@@ -5,6 +5,7 @@
     <div class="media">
       <h3>Name: <%= @user.name %></h3>
       <h3>Email: <%= @user.email %></h3>
+      <h3>Membership type: <%= @user.role %></h3>
       <br>
       <small>
         <%= pluralize(@user.wikis.count, 'wiki') %> created.

@@ -1,5 +1,5 @@
 <div class="jumbotron">
-  <h2>Choose the collaborators for your <%= wiki.title %> Wiki (showing all users)</h2>
+  <h2>Choose the collaborators for your <%= @wiki.title %> Wiki (showing all users)</h2>
   <br>
   <br>
   <div class="row">
@@ -23,15 +23,7 @@
       <h4><%= user.email %></h4>
       </div>
       <div class="col-md-4">
-        <% if collaborator = current_user.collaborator_to(wiki) %>
-          <%= check_box [wiki, collaborator], class: 'btn btn-danger', method: :delete do %>
-            Remove
-          <% end %>
-        <% else %>
-          <%= check_box [wiki, collaborator], class: 'btn btn-primary', method: :post do %>
-            Add
-          <% end %>
-        <% end %>
+        <%= render partial: 'collaborators/collaborator', locals: {wiki: @wiki, user: @user} %>
       </div>
     </div>
   <% end %>
