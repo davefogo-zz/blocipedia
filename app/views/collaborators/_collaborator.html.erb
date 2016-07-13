@@ -1,9 +1,9 @@
-<% if collaborator = @user.collaborator_to(wiki) %>
-  <%= link_to [wiki, collaborator], class: 'btn btn-danger', method: :delete do %>
+<% if collaborator = current_user.collaborator_to(wiki) %>
+  <%= check_box [wiki, collaborator], class: 'btn btn-danger', method: :delete do %>
     Remove
   <% end %>
 <% else %>
-  <%= link_to [wiki, Collaborator.new], class: 'btn btn-primary', method: :post do %>
+  <%= check_box [wiki, Collaborator.new], class: 'btn btn-primary', method: :post do %>
     Add
   <% end %>
 <% end %>
