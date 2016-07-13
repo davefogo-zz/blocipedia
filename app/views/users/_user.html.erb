@@ -23,7 +23,7 @@
       <h4><%= user.email %></h4>
       </div>
       <div class="col-md-4">
-        <%= render partial: 'collaborators/collaborator', locals: {wiki: @wiki, user: @user} %>
+        <%= render partial: 'collaborators/collaborator', locals: {wiki: @wiki, user: user} %>
       </div>
     </div>
   <% end %>

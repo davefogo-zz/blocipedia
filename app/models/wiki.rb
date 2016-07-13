@@ -5,5 +5,5 @@ class Wiki < ActiveRecord::Base
   validates :body, length: {minimum: 20}, presence: true
   validates :user, presence: true
 
-  scope :visible_to, -> (user) {user.premium? ? all : where(private: false)}
+  scope :visible_to, -> (user) {user ? all : where(private: false)}
 end

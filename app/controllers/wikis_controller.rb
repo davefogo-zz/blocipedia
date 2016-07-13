@@ -10,9 +10,14 @@ class WikisController < ApplicationController
   def show
     @wiki = Wiki.find(params[:id])
 
-    unless @wiki.private == false || current_user.premium? && current_user == @wiki.user || current_user.collaborator_to(@wiki) || current_user.admin?
+    if current_user.nil? && @wiki.private
       flash[:alert] = "You must be premium user to read private wikis."
       redirect_to wikis_path
+    else
+      unless @wiki.private == false || current_user.premium? || current_user == @wiki.user || current_user.collaborator_to(@wiki) || current_user.admin?
+        flash[:alert] = "You must be premium user to read private wikis."
+        redirect_to wikis_path
+      end
     end
   end
 
